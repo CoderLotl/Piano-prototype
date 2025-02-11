@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let tempo = 0.5;
     let duration = 1.0;
     const baseDelay = 0.25;
+    let activeOscillators = [];
     
     const keysInput = document.getElementById('inputText');
     const tempoSlider = document.getElementById('tempo_slider');
@@ -73,6 +74,18 @@ document.addEventListener('DOMContentLoaded', () => {
         // Start and then stop the oscillator after 1 second.
         oscillator.start(now);
         oscillator.stop(now + duration - 0.1);
+
+        activeOscillators.push(oscillator);
+        oscillator.onended = () =>
+        {
+            activeOscillators = activeOscillators.filter(o => o !== oscillator);
+        };
+    }
+
+    function stopAllNotes()
+    {
+        activeOscillators.forEach(osc => osc.stop());
+        activeOscillators = [];
     }
 
     function playString()
@@ -138,6 +151,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.getElementById('playButton').addEventListener('click', playString);
+
+    document.getElementById('stopButton').addEventListener('click', stopAllNotes);
 
     document.getElementById('inputText').addEventListener('input', (e) =>
     {
