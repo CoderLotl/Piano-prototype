@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Simple Piano</title>  
+  <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+  <script type="module" src="./index.js"></script>
+</head>
+<body>
+  <h1 style="text-align: center;">Simple Piano</h1>
+  <div id="piano" class="flex bg-slate-300 items-center justify-center py-4 mt-20">
+    <!-- Each button represents a note. The data-note attribute is used to pick the frequency. -->
+    <button data-note="C4" data-char="A" class="border border-black w-10 h-50 bg-slate-200 mx-1 hover:bg-slate-300 flex flex-col justify-between">
+      <span class="mt-[100px]">
+        C
+      </span>
+      <span class="mb-[20px] text-slate-400">
+        A
+      </span>        
+    </button>
+    <button data-note="D4" data-char="B" class="border border-black w-10 h-50 bg-slate-200 mx-1 hover:bg-slate-300 flex flex-col justify-between">
+      <span class="mt-[100px]">
+        D
+      </span>
+      <span class="mb-[20px] text-slate-400">
+        B
+      </span>
+    </button>
+    <button data-note="E4" data-char="C" class="border border-black w-10 h-50 bg-slate-200 mx-1 hover:bg-slate-300 flex flex-col justify-between">
+      <span class="mt-[100px]">
+        E
+      </span>
+      <span class="mb-[20px] text-slate-400">
+        C
+      </span>
+    </button>
+    <button data-note="F4" data-char="D" class="border border-black w-10 h-50 bg-slate-200 mx-1 hover:bg-slate-300 flex flex-col justify-between">
+      <span class="mt-[100px]">
+        F
+      </span>
+      <span class="mb-[20px] text-slate-400">
+        D
+      </span>
+    </button>
+    <button data-note="G4" data-char="E" class="border border-black w-10 h-50 bg-slate-200 mx-1 hover:bg-slate-300 flex flex-col justify-between">
+      <span class="mt-[100px]">
+        G
+      </span>
+      <span class="mb-[20px] text-slate-400">
+        E
+      </span>
+    </button>
+    <button data-note="A4" data-char="F" class="border border-black w-10 h-50 bg-slate-200 mx-1 hover:bg-slate-300 flex flex-col justify-between">
+      <span class="mt-[100px]">
+        A
+      </span>
+      <span class="mb-[20px] text-slate-400">
+        F
+      </span>
+    </button>
+    <button data-note="B4" data-char="G" class="border border-black w-10 h-50 bg-slate-200 mx-1 hover:bg-slate-300 flex flex-col justify-between">
+      <span class="mt-[100px]">
+        B
+      </span>
+      <span class="mb-[20px] text-slate-400">
+        G
+      </span>
+    </button>
+    <button data-note="C5" data-char="H" class="border border-black w-10 h-50 bg-slate-200 mx-1 hover:bg-slate-300 flex flex-col justify-between">
+      <span class="mt-[100px]">
+        C
+      </span>
+      <span class="mb-[20px] text-slate-400">
+        H
+      </span>
+    </button>    
+  </div>
+
+  <div class="flex flex-col w-full items-center bg-slate-300">
+    <div class="w-[350px]">
+      <div class="flex flex-col justify-center">
+        <span>Tempo: </span>
+        <input
+          type="range"
+          min="0.0"
+          max="1.0"
+          step="0.01"
+          value="0.5"
+          list="tempos"
+          name="tempo"
+          id="tempo_slider"/>
+        <datalist id="tempos">
+          <option value="0.0" label="Mute"></option>
+          <option value="0.25" label="Lento"></option>
+          <option value="0.5" label="Allegro"></option>
+          <option value="0.75" label="Presto"></option>
+          <option value="1.0" label="Prestissimo"></option>
+        </datalist>
+        <div class="flex justify-between">
+          <span class="text-[9px]">
+            Mute
+          </span>
+          <span class="text-[9px]">
+            Lento
+          </span>
+          <span class="text-[9px]">
+            Allegro
+          </span>
+          <span class="text-[9px]">
+            Presto
+          </span>
+          <span class="text-[9px]">
+            Prestissimo
+          </span>
+        </div>
+      </div>
+    
+      <div class="flex flex-col justify-center">
+        <span>Note Duration: </span>
+        <input
+          type="range"
+          min="0.5"
+          max="2.0"
+          step="0.01"
+          value="1.0"
+          list="durations"
+          name="tempo"
+          id="duration_slider"/>
+        <datalist id="durations">
+          <option value="0.5" label="0.5s"></option>      
+          <option value="1.0" label="1.0s"></option>      
+          <option value="1.5" label="1.5s"></option>
+          <option value="2.0" label="2.0s"></option>
+        </datalist>
+        <div class="flex justify-between">
+          <span class="text-xs">
+            0.5s
+          </span>
+          <span class="text-xs">
+            1.0s
+          </span>
+          <span class="text-xs">
+            1.5s
+          </span>
+          <span class="text-xs">
+            2.0s
+          </span>
+        </div>
+      </div>
+    </div>    
+  </div>
+
+  <div class="flex justify-center mt-15">
+    <textarea type="text" id="inputText" placeholder="Type only ABCDEFGH" class="border h-min-[20px] h-auto border-slate-300 mr-5 px-3 py-1 text-[18px] resize-none overflow-hidden text-wrap"></textarea>
+    <button id="playButton" class="border border-slate-300 rounded-md p-2 hover:bg-slate-400">
+      Play
+    </button>
+  </div>
+</body>
+</html>
