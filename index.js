@@ -1,19 +1,35 @@
-document.addEventListener('DOMContentLoaded', () => {
-    // Create the AudioContext (handle vendor prefixes)
-    const AudioContext = window.AudioContext || window.webkitAudioContext;
-    const audioCtx = new AudioContext();
+import { audioCtx } from './audioContext.js';
+// import { electricGuitarWave, organWave, saxWave, bellWave, brassWave, harpsichordWave } from "./sounds.js";
+
+document.addEventListener('DOMContentLoaded', () =>
+{
     const validChars = "ABCDEFGH";
     let tempo = 0.5;
     let duration = 1.0;
     const baseDelay = 0.25;
+    let type = 'sine';
+    let customType = false;
     let activeOscillators = [];
+    // let customTypes = ['electricGuitar', 'organ', 'saxophone', 'bell', 'brass', 'harp'];
     
     const keysInput = document.getElementById('inputText');
     const tempoSlider = document.getElementById('tempo_slider');
     const durationSlider = document.getElementById('duration_slider');
+    //const typeSelect = document.getElementById('instrumentSelect');
 
     tempoSlider.value = tempo;
     durationSlider.value = duration;
+    //typeSelect.value = type;
+
+    // const customWaves =
+    // {
+    //     'electricGuitar': electricGuitarWave,
+    //     'organ': organWave,
+    //     'saxophone': saxWave,
+    //     'bell': bellWave,
+    //     'brass': brassWave,
+    //     'harp': harpsichordWave
+    // }
 
     // Define frequencies for some musical notes.
     const noteFrequencies =
@@ -59,7 +75,15 @@ document.addEventListener('DOMContentLoaded', () => {
         gainNode.connect(audioCtx.destination);
 
         // Set oscillator properties: type and frequency
-        oscillator.type = 'sine';
+        if(customType)
+        {
+            oscillator.setPeriodicWave(type);
+        }
+        else
+        {
+            oscillator.type = type;
+        }
+        
         oscillator.frequency.value = frequency;
 
         // Create a simple envelope:
@@ -111,6 +135,20 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     }
+
+    // typeSelect.addEventListener('input', (e)=>
+    // {
+    //     if(customTypes.includes(e.target.value))
+    //     {
+    //         customType = true;            
+    //         type = customWaves[e.target.value];            
+    //     }
+    //     else
+    //     {
+    //         customType = false;
+    //         type = e.target.value;
+    //     }
+    // })
 
     tempoSlider.addEventListener('input', (e)=>
     {
