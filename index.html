@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Simple Piano</title>  
   <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
-  <script type="module" src="./index.js"></script>
-  <link rel="stylesheet" href="./index.css">
+  <script type="module" src="./js/index.js"></script>
+  <link rel="stylesheet" href="./css/index.css">
 </head>
 <body class="w-[100vw] h-[100vh] flex flex-col items-center">
   <h1 class="text-center">Simple Piano</h1>
@@ -177,7 +177,7 @@
     </div>
   
     <div class="flex justify-center mt-[10px]">
-      <div class="w-[600px]">
+      <div class="w-[300px] md:w-[600px]">
         <label class="switch">
           <input id="write_music" type="checkbox">
           <span class="slider round"></span>
@@ -200,12 +200,12 @@
       </div>
   
       <textarea type="text" id="inputText" placeholder="Type only ABCDEFGH"
-      class="border w-[600px] h-min-[200px] h-auto border-slate-300 px-3 py-1 text-[18px] resize-none overflow-hidden text-wrap"></textarea>
+      class="border w-[350px] md:w-[600px] h-min-[200px] h-auto border-slate-300 px-3 py-1 text-[18px] resize-none overflow-hidden text-wrap"></textarea>
     </div>
   </main>
 
-  <a href="https://github.com/CoderLotl/Piano-prototype" class="italic bg-slate-600 text-slate-300 font-semibold flex items-center py-2 pl-10">
-    <img src="./github-mark-white.png" width="30px" height="30px" class="">
+  <a href="https://github.com/CoderLotl/Piano-prototype" class="w-full italic bg-slate-600 text-slate-300 font-semibold flex items-center py-2 pl-10">
+    <img src="./resources/github-mark-white.png" width="30px" height="30px" class="">
     github.com/CoderLotl/Piano-prototype
   </a>
 </body>
