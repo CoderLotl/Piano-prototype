@@ -230,8 +230,9 @@ function playString()
         if(validChars.includes(char))
         {
             let note = noteValues[char];
-            playNote(noteFrequencies[note], delayIndex * interval, noteDuration);                
-            delayIndex++;
+            playNote(noteFrequencies[note], delayIndex * interval, noteDuration);
         }
+
+        delayIndex++;
     }
 }
