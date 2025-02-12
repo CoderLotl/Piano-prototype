@@ -39,7 +39,7 @@ const harpsichordWave = audioCtx.createPeriodicWave(
 
 export const waves =
 [
-    { name: 'Electric Guitar', wave: electricGuitarWave},
-    { name: 'Organ', wave: organWave},
-    { name: 'Sax', wave: saxWave }
+    //{ name: 'Electric Guitar', wave: electricGuitarWave},
+    //{ name: 'Organ', wave: organWave},
+    //{ name: 'Sax', wave: saxWave }
 ];
