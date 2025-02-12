@@ -109,7 +109,7 @@ document.addEventListener('DOMContentLoaded', () =>
             const frequency = noteFrequencies[note];
             if(frequency)
             {
-                playNote(frequency, 0);
+                playNote(frequency, 0, duration);
             }
 
             if(writeMusic)
