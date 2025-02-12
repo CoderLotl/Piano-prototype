@@ -5,6 +5,7 @@
   <title>Simple Piano</title>  
   <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
   <script type="module" src="./index.js"></script>
+  <link rel="stylesheet" href="./index.css">
 </head>
 <body>
   <h1 style="text-align: center;">Simple Piano</h1>
@@ -165,14 +166,34 @@
     </div>    
   </div>
 
-  <div class="flex justify-center mt-15">
-    <textarea type="text" id="inputText" placeholder="Type only ABCDEFGH" class="border h-min-[20px] h-auto border-slate-300 mr-5 px-3 py-1 text-[18px] resize-none overflow-hidden text-wrap"></textarea>
-    <button id="playButton" class="border border-slate-300 rounded-md p-2 hover:bg-slate-400">
-      Play
-    </button>
-    <button id="stopButton" class="border border-slate-300 rounded-md p-2 hover:bg-red-400 ml-2">
-      Stop
-    </button>
+  <div class="flex justify-center mt-[10px]">
+    <div class="w-[600px]">
+      <label class="switch">
+        <input id="write_music" type="checkbox">
+        <span class="slider round"></span>
+      </label>
+      Write Music
+    </div>
+  </div>
+
+
+  <div class="flex flex-col justify-center items-center mt-15">
+    <div class="flex mb-5">
+      <button id="playButton" class="border border-slate-300 rounded-md p-2 hover:bg-slate-400">
+        Play
+      </button>
+      <button id="stopButton" class="border border-slate-300 rounded-md p-2 hover:bg-red-400 ml-2">
+        Stop
+      </button>
+      <button id="clearButton" class="border border-slate-300 rounded-md p-2 hover:bg-red-400 ml-2">
+        Clear
+      </button>
+    </div>
+
+    <textarea type="text" id="inputText" placeholder="Type only ABCDEFGH"
+    class="border w-[600px] h-min-[200px] h-auto border-slate-300 mr-5 px-3 py-1 text-[18px] resize-none overflow-hidden text-wrap">
+
+    </textarea>
   </div>
 </body>
 </html>

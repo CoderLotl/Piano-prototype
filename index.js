@@ -12,6 +12,7 @@ let keysInput;
 let tempoSlider;
 let durationSlider;
 let typeSelect;
+let writeMusic = false;
 
 // Define frequencies for some musical notes.
 const noteFrequencies =
@@ -111,14 +112,27 @@ document.addEventListener('DOMContentLoaded', () =>
                 playNote(frequency, 0);
             }
 
-            const noteValue = element.getAttribute('data-char');
-            keysInput.value += noteValue;
+            if(writeMusic)
+            {
+                const noteValue = element.getAttribute('data-char');
+                keysInput.value += noteValue;
+            }
         }
     });
 
     document.getElementById('playButton').addEventListener('click', playString);
 
     document.getElementById('stopButton').addEventListener('click', stopAllNotes);
+
+    document.getElementById('clearButton').addEventListener('click', ()=>
+    {
+        keysInput.value = '';
+    });
+
+    document.getElementById('write_music').addEventListener('click', ()=>
+    {
+        writeMusic = !writeMusic;
+    });
 
     document.getElementById('inputText').addEventListener('input', (e) =>
     {
