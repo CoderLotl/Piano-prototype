@@ -93,7 +93,7 @@
             </button>            
         </div>
 
-        <div class="flex justify-center">
+        <div class="flex justify-center mt-2">
             <div class="flex flex-col justify-center">
                 <span>Note Duration: </span>
                 <input type="range" min="0.1" max="3.0" step="0.01" value="1.0" list="durations" name="tempo"
@@ -131,11 +131,11 @@
                     </span>
                 </div>
             </div>
-            <canvas id="wave_form" class="w-[200px] h-[200px] ml-5 border border-green-400 rounded-md"></canvas>
+            <canvas id="wave_form" class="w-[150px] md:w-[200px] h-[150px] md:h-[200px] ml-5 border border-green-400 rounded-md"></canvas>
         </div>
 
         <div class="flex flex-col md:mt-[50px] md:w-[50%]">
-            <fieldset class="flex border rounded-md p-5 items-end">
+            <fieldset class="flex flex-col md:flex-row border rounded-md p-5 items-start">
                 <legend class="border rounded-md p-[3px] ml-[-10px]">
                     Wave Composition
                 </legend>
@@ -161,16 +161,19 @@
                         </div>
                     </div>
                 </div>
-                <button id="set_arrays_btn"
-                    class="border border-slate-400 rounded-md h-[50px] w-[50px] ml-5 md:ml-10 hover:bg-slate-200">
-                    Set
-                </button>
-                <button id="unset_arrays_btn"
-                    class="border border-slate-400 rounded-md h-[50px] w-[50px] ml-2 hover:bg-slate-200">
-                    Unset
-                </button>
-                <span id="wave_indicator"
-                    class="border border-slate-400 w-[20px] h-[20px] rounded-full ml-2 md:ml-5 bg-red-400"></span>
+                <div class="flex items-end mt-5 md:mt-2">
+                    <button id="set_arrays_btn"
+                        class="border border-slate-400 rounded-md h-[50px] w-[50px] md:ml-10 hover:bg-slate-200">
+                        Set
+                    </button>
+                    <button id="unset_arrays_btn"
+                        class="border border-slate-400 rounded-md h-[50px] w-[50px] ml-2 hover:bg-slate-200">
+                        Unset
+                    </button>
+                    <div id="wave_indicator" class="border border-slate-400 w-[20px] h-[20px] rounded-full ml-2 md:ml-5 bg-red-400">
+
+                    </div>
+                </div>
             </fieldset>
         </div>
 
