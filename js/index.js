@@ -202,7 +202,7 @@ function playNote(frequency, time = 0.6, duration = 0.6)
     activeOscillators.push(oscillator);
     oscillator.onended = () =>
     {
-        activeOscillators = activeOscillators.filter(o => o !== oscillator);
+        activeOscillators = activeOscillators.filter(o => o !== oscillator);        
     };
 }
 
@@ -210,6 +210,7 @@ function stopAllNotes()
 {
     activeOscillators.forEach(osc => osc.stop());
     activeOscillators = [];
+    audioCtx.suspend();
 }
 
 function playString()

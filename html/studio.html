@@ -1,247 +1,264 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Simple Piano Studio</title>  
-  <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
-  <script type="module" src="../js/studio.js"></script>  
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Piano Studio</title>
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <script type="module" src="../js/studio.js"></script>
 </head>
+
 <body class="w-full h-[100vh] flex flex-col items-center">
-  <h1 class="text-center">Simple Piano Studio</h1>
-  <main class="flex flex-col items-center grow mb-[50px] w-full">
+    <h1 class="text-center">Simple Piano Studio</h1>
+    <main class="flex flex-col items-center grow mb-[50px] w-full">
 
-    <div class="mt-20 mb-5 flex flex-col items-center">
-      <a class="border border-slate-300 rounded-md p-2 bg-blue-400 hover:bg-orange-400" href="../index.html">
-        <<< To the Piano.
-      </a>
-    </div>
-    <div id="piano" class="flex bg-slate-300 items-center justify-center py-4 w-full">
-        <!-- Each button represents a note. The data-note attribute is used to pick the frequency. -->
-        <button data-note="C4" data-char="A" class="border border-black w-10 h-50 bg-slate-200 mx-1 hover:bg-slate-300 flex flex-col justify-between">
-          <span class="mt-[100px]">
-            C
-          </span>
-          <span class="mb-[20px] text-slate-400">
-            A
-          </span>        
-        </button>
-        <button data-note="D4" data-char="B" class="border border-black w-10 h-50 bg-slate-200 mx-1 hover:bg-slate-300 flex flex-col justify-between">
-          <span class="mt-[100px]">
-            D
-          </span>
-          <span class="mb-[20px] text-slate-400">
-            B
-          </span>
-        </button>
-        <button data-note="E4" data-char="C" class="border border-black w-10 h-50 bg-slate-200 mx-1 hover:bg-slate-300 flex flex-col justify-between">
-          <span class="mt-[100px]">
-            E
-          </span>
-          <span class="mb-[20px] text-slate-400">
-            C
-          </span>
-        </button>
-        <button data-note="F4" data-char="D" class="border border-black w-10 h-50 bg-slate-200 mx-1 hover:bg-slate-300 flex flex-col justify-between">
-          <span class="mt-[100px]">
-            F
-          </span>
-          <span class="mb-[20px] text-slate-400">
-            D
-          </span>
-        </button>
-        <button data-note="G4" data-char="E" class="border border-black w-10 h-50 bg-slate-200 mx-1 hover:bg-slate-300 flex flex-col justify-between">
-          <span class="mt-[100px]">
-            G
-          </span>
-          <span class="mb-[20px] text-slate-400">
-            E
-          </span>
-        </button>
-        <button data-note="A4" data-char="F" class="border border-black w-10 h-50 bg-slate-200 mx-1 hover:bg-slate-300 flex flex-col justify-between">
-          <span class="mt-[100px]">
-            A
-          </span>
-          <span class="mb-[20px] text-slate-400">
-            F
-          </span>
-        </button>
-        <button data-note="B4" data-char="G" class="border border-black w-10 h-50 bg-slate-200 mx-1 hover:bg-slate-300 flex flex-col justify-between">
-          <span class="mt-[100px]">
-            B
-          </span>
-          <span class="mb-[20px] text-slate-400">
-            G
-          </span>
-        </button>
-        <button data-note="C5" data-char="H" class="border border-black w-10 h-50 bg-slate-200 mx-1 hover:bg-slate-300 flex flex-col justify-between">
-          <span class="mt-[100px]">
-            C
-          </span>
-          <span class="mb-[20px] text-slate-400">
-            H
-          </span>
-        </button>
-    </div>
-
-    <div class="flex flex-col justify-center">
-        <span>Note Duration: </span>
-        <input
-            type="range"
-            min="0.1"
-            max="3.0"
-            step="0.01"
-            value="1.0"
-            list="durations"
-            name="tempo"
-            id="duration_slider"/>
-        <datalist id="durations">
-            <option value="0.1" label="0.5s"></option> 
-            <option value="0.5" label="0.5s"></option>      
-            <option value="1.0" label="1.0s"></option>      
-            <option value="1.5" label="1.5s"></option>
-            <option value="2.0" label="2.0s"></option>
-            <option value="2.5" label="2.0s"></option>
-            <option value="3.0" label="2.0s"></option>
-        </datalist>
-        <div class="flex justify-between">
-            <span class="text-xs">
-                0.1s
-            </span>
-            <span class="text-xs">
-                0.5s
-            </span>
-            <span class="text-xs">
-                1.0s
-            </span>
-            <span class="text-xs">
-                1.5s
-            </span>
-            <span class="text-xs">
-                2.0s
-            </span>
-            <span class="text-xs">
-                2.5s
-            </span>
-            <span class="text-xs">
-                3.0s
-            </span>
+        <div class="mt-20 mb-5 flex flex-col items-center">
+            <a class="border border-slate-300 rounded-md p-2 bg-blue-400 hover:bg-orange-400" href="../index.html">
+                <<< To the Piano. </a>
         </div>
-    </div>
-
-    <div class="flex flex-col md:mt-[50px] md:w-[50%]">
-        <fieldset class="flex border rounded-md p-5 items-end">
-            <legend class="border rounded-md p-[3px] ml-[-10px]">
-                Wave Composition
-            </legend>
-            <div>
-                <div class="flex items-center justify-start">
-                    <span>
-                        Real Array
-                    </span>
-                    <div class="flex items-center border border-slate-400 rounded-md px-2 ml-2 ">
-                        [ <textarea placeholder="Type only numbers separated by a space: 1 2.5 3..." name="real_array" id="real_array" class="md:w-[350px] resize-none h-[25px] mx-2 outline-none"></textarea> ]
-                    </div>
-                </div>
-                <div class="flex items-center mt-2 justify-start">
-                    <span>
-                        Img Array
-                    </span>
-                    <div class="flex items-center border border-slate-400 rounded-md px-2 ml-2">
-                        [ <textarea placeholder="Type only numbers separated by a space: 1 2.5 3..." name="img_array" id="img_array" class="md:w-[350px] resize-none h-[25px] mx-2 outline-none"></textarea> ]
-                    </div>
-                </div>
-            </div>
-            <button id="set_arrays_btn" class="border border-slate-400 rounded-md h-[50px] w-[50px] ml-5 md:ml-10 hover:bg-slate-200">
-                Set
-            </button>
-            <span id="wave_indicator" class="border border-slate-400 w-[20px] h-[20px] rounded-full ml-2 md:ml-5 bg-red-400"></span>
-        </fieldset>
-    </div>
-
-    <div class="flex flex-col mt-[50px] md:w-[50%]">
-        <fieldset class="flex flex-col border rounded-md p-5 items-end">
-            <legend class="border rounded-md p-[3px] ml-[-10px]">
-                Frequency Set
-            </legend>
-            <div class="flex items-center w-full">
-                <span class="mr-5 md:mr-[50px]">
-                    A
-                </span>
-                <input type="range" min="40" max="4000" step="30" value="400" id="a_freq" class="grow">
-                <span id="a_freq_value" class="w-[60px] h-[30px] border border-slate-400 rounded-md ml-[50px]">
-
-                </span>
-            </div>
-            <div class="flex items-center w-full">
-                <span class="mr-5 md:mr-[50px]">
-                    B
-                </span>
-                <input type="range" min="40" max="4000" step="30" value="400" id="b_freq" class="grow">
-                <span id="b_freq_value" class="w-[60px] h-[30px] border border-slate-400 rounded-md ml-[50px]">
-
-                </span>
-            </div>
-            <div class="flex items-center w-full">
-                <span class="mr-5 md:mr-[50px]">
+        <div id="piano" class="flex bg-slate-300 items-center justify-center py-4 w-full">
+            <!-- Each button represents a note. The data-note attribute is used to pick the frequency. -->
+            <button data-note="C4" data-char="A"
+                class="border border-black w-10 h-50 bg-slate-200 mx-1 hover:bg-slate-300 flex flex-col justify-between">
+                <span class="mt-[100px]">
                     C
                 </span>
-                <input type="range" min="40" max="4000" step="30" value="400" id="c_freq" class="grow">
-                <span id="c_freq_value" class="w-[60px] h-[30px] border border-slate-400 rounded-md ml-[50px]">
-
+                <span class="mb-[20px] text-slate-400">
+                    A
                 </span>
-            </div>
-            <div class="flex items-center w-full">
-                <span class="mr-5 md:mr-[50px]">
+            </button>
+            <button data-note="D4" data-char="B"
+                class="border border-black w-10 h-50 bg-slate-200 mx-1 hover:bg-slate-300 flex flex-col justify-between">
+                <span class="mt-[100px]">
                     D
                 </span>
-                <input type="range" min="40" max="4000" step="30" value="400" id="d_freq" class="grow">
-                <span id="d_freq_value" class="w-[60px] h-[30px] border border-slate-400 rounded-md ml-[50px]">
-
+                <span class="mb-[20px] text-slate-400">
+                    B
                 </span>
-            </div>
-            <div class="flex items-center w-full">
-                <span class="mr-5 md:mr-[50px]">
+            </button>
+            <button data-note="E4" data-char="C"
+                class="border border-black w-10 h-50 bg-slate-200 mx-1 hover:bg-slate-300 flex flex-col justify-between">
+                <span class="mt-[100px]">
                     E
                 </span>
-                <input type="range" min="40" max="4000" step="30" value="400" id="e_freq" class="grow">
-                <span id="e_freq_value" class="w-[60px] h-[30px] border border-slate-400 rounded-md ml-[50px]">
-
+                <span class="mb-[20px] text-slate-400">
+                    C
                 </span>
-            </div>
-            <div class="flex items-center w-full">
-                <span class="mr-5 md:mr-[50px]">
+            </button>
+            <button data-note="F4" data-char="D"
+                class="border border-black w-10 h-50 bg-slate-200 mx-1 hover:bg-slate-300 flex flex-col justify-between">
+                <span class="mt-[100px]">
                     F
                 </span>
-                <input type="range" min="40" max="4000" step="30" value="400" id="f_freq" class="grow">
-                <span id="f_freq_value" class="w-[60px] h-[30px] border border-slate-400 rounded-md ml-[50px]">
-
+                <span class="mb-[20px] text-slate-400">
+                    D
                 </span>
-            </div>
-            <div class="flex items-center w-full">
-                <span class="mr-5 md:mr-[50px]">
+            </button>
+            <button data-note="G4" data-char="E"
+                class="border border-black w-10 h-50 bg-slate-200 mx-1 hover:bg-slate-300 flex flex-col justify-between">
+                <span class="mt-[100px]">
                     G
                 </span>
-                <input type="range" min="40" max="4000" step="30" value="400" id="g_freq" class="grow">
-                <span id="g_freq_value" class="w-[60px] h-[30px] border border-slate-400 rounded-md ml-[50px]">
-
+                <span class="mb-[20px] text-slate-400">
+                    E
                 </span>
-            </div>
-            <div class="flex items-center w-full">
-                <span class="mr-5 md:mr-[50px]">
+            </button>
+            <button data-note="A4" data-char="F"
+                class="border border-black w-10 h-50 bg-slate-200 mx-1 hover:bg-slate-300 flex flex-col justify-between">
+                <span class="mt-[100px]">
+                    A
+                </span>
+                <span class="mb-[20px] text-slate-400">
+                    F
+                </span>
+            </button>
+            <button data-note="B4" data-char="G"
+                class="border border-black w-10 h-50 bg-slate-200 mx-1 hover:bg-slate-300 flex flex-col justify-between">
+                <span class="mt-[100px]">
+                    B
+                </span>
+                <span class="mb-[20px] text-slate-400">
+                    G
+                </span>
+            </button>
+            <button data-note="C5" data-char="H"
+                class="border border-black w-10 h-50 bg-slate-200 mx-1 hover:bg-slate-300 flex flex-col justify-between">
+                <span class="mt-[100px]">
+                    C
+                </span>
+                <span class="mb-[20px] text-slate-400">
                     H
                 </span>
-                <input type="range" min="40" max="4000" step="30" value="400" id="h_freq" class="grow">
-                <span id="h_freq_value" class="w-[60px] h-[30px] border border-slate-400 rounded-md ml-[50px]">
+            </button>            
+        </div>
 
-                </span>
+        <div class="flex justify-center">
+            <div class="flex flex-col justify-center">
+                <span>Note Duration: </span>
+                <input type="range" min="0.1" max="3.0" step="0.01" value="1.0" list="durations" name="tempo"
+                    id="duration_slider" />
+                <datalist id="durations">
+                    <option value="0.1" label="0.5s"></option>
+                    <option value="0.5" label="0.5s"></option>
+                    <option value="1.0" label="1.0s"></option>
+                    <option value="1.5" label="1.5s"></option>
+                    <option value="2.0" label="2.0s"></option>
+                    <option value="2.5" label="2.0s"></option>
+                    <option value="3.0" label="2.0s"></option>
+                </datalist>
+                <div class="flex justify-between">
+                    <span class="text-xs">
+                        0.1s
+                    </span>
+                    <span class="text-xs">
+                        0.5s
+                    </span>
+                    <span class="text-xs">
+                        1.0s
+                    </span>
+                    <span class="text-xs">
+                        1.5s
+                    </span>
+                    <span class="text-xs">
+                        2.0s
+                    </span>
+                    <span class="text-xs">
+                        2.5s
+                    </span>
+                    <span class="text-xs">
+                        3.0s
+                    </span>
+                </div>
             </div>
-        </fieldset>
-    </div>
-  </main>
-  <a href="https://github.com/CoderLotl/Piano-prototype" class="w-full italic bg-slate-600 text-slate-300 font-semibold flex items-center py-2 pl-10">
-    <img src="../resources/github-mark-white.png" width="30px" height="30px" class="">
-    github.com/CoderLotl/Piano-prototype
-  </a>
+            <canvas id="wave_form" class="w-[200px] h-[200px] ml-5 border border-green-400 rounded-md"></canvas>
+        </div>
+
+        <div class="flex flex-col md:mt-[50px] md:w-[50%]">
+            <fieldset class="flex border rounded-md p-5 items-end">
+                <legend class="border rounded-md p-[3px] ml-[-10px]">
+                    Wave Composition
+                </legend>
+                <div>
+                    <div class="flex items-center justify-start">
+                        <span>
+                            Real Array
+                        </span>
+                        <div class="flex items-center border border-slate-400 rounded-md px-2 ml-2 ">
+                            [ <textarea placeholder="Type only numbers separated by a space: 1 2.5 3..."
+                                name="real_array" id="real_array"
+                                class="md:w-[350px] resize-none h-[25px] mx-2 outline-none"></textarea> ]
+                        </div>
+                    </div>
+                    <div class="flex items-center mt-2 justify-start">
+                        <span>
+                            Img Array
+                        </span>
+                        <div class="flex items-center border border-slate-400 rounded-md px-2 ml-2">
+                            [ <textarea placeholder="Type only numbers separated by a space: 1 2.5 3..."
+                                name="img_array" id="img_array"
+                                class="md:w-[350px] resize-none h-[25px] mx-2 outline-none"></textarea> ]
+                        </div>
+                    </div>
+                </div>
+                <button id="set_arrays_btn"
+                    class="border border-slate-400 rounded-md h-[50px] w-[50px] ml-5 md:ml-10 hover:bg-slate-200">
+                    Set
+                </button>
+                <button id="unset_arrays_btn"
+                    class="border border-slate-400 rounded-md h-[50px] w-[50px] ml-2 hover:bg-slate-200">
+                    Unset
+                </button>
+                <span id="wave_indicator"
+                    class="border border-slate-400 w-[20px] h-[20px] rounded-full ml-2 md:ml-5 bg-red-400"></span>
+            </fieldset>
+        </div>
+
+        <div class="flex flex-col mt-[50px] md:w-[50%]">
+            <fieldset class="flex flex-col border rounded-md p-5 items-end">
+                <legend class="border rounded-md p-[3px] ml-[-10px]">
+                    Frequency Set
+                </legend>
+                <div class="flex items-center w-full">
+                    <span class="mr-5 md:mr-[50px]">
+                        A
+                    </span>
+                    <input type="range" min="40" max="4000" step="30" value="400" id="a_freq" class="grow">
+                    <span id="a_freq_value" class="w-[60px] h-[30px] border border-slate-400 rounded-md ml-[50px]">
+
+                    </span>
+                </div>
+                <div class="flex items-center w-full">
+                    <span class="mr-5 md:mr-[50px]">
+                        B
+                    </span>
+                    <input type="range" min="40" max="4000" step="30" value="400" id="b_freq" class="grow">
+                    <span id="b_freq_value" class="w-[60px] h-[30px] border border-slate-400 rounded-md ml-[50px]">
+
+                    </span>
+                </div>
+                <div class="flex items-center w-full">
+                    <span class="mr-5 md:mr-[50px]">
+                        C
+                    </span>
+                    <input type="range" min="40" max="4000" step="30" value="400" id="c_freq" class="grow">
+                    <span id="c_freq_value" class="w-[60px] h-[30px] border border-slate-400 rounded-md ml-[50px]">
+
+                    </span>
+                </div>
+                <div class="flex items-center w-full">
+                    <span class="mr-5 md:mr-[50px]">
+                        D
+                    </span>
+                    <input type="range" min="40" max="4000" step="30" value="400" id="d_freq" class="grow">
+                    <span id="d_freq_value" class="w-[60px] h-[30px] border border-slate-400 rounded-md ml-[50px]">
+
+                    </span>
+                </div>
+                <div class="flex items-center w-full">
+                    <span class="mr-5 md:mr-[50px]">
+                        E
+                    </span>
+                    <input type="range" min="40" max="4000" step="30" value="400" id="e_freq" class="grow">
+                    <span id="e_freq_value" class="w-[60px] h-[30px] border border-slate-400 rounded-md ml-[50px]">
+
+                    </span>
+                </div>
+                <div class="flex items-center w-full">
+                    <span class="mr-5 md:mr-[50px]">
+                        F
+                    </span>
+                    <input type="range" min="40" max="4000" step="30" value="400" id="f_freq" class="grow">
+                    <span id="f_freq_value" class="w-[60px] h-[30px] border border-slate-400 rounded-md ml-[50px]">
+
+                    </span>
+                </div>
+                <div class="flex items-center w-full">
+                    <span class="mr-5 md:mr-[50px]">
+                        G
+                    </span>
+                    <input type="range" min="40" max="4000" step="30" value="400" id="g_freq" class="grow">
+                    <span id="g_freq_value" class="w-[60px] h-[30px] border border-slate-400 rounded-md ml-[50px]">
+
+                    </span>
+                </div>
+                <div class="flex items-center w-full">
+                    <span class="mr-5 md:mr-[50px]">
+                        H
+                    </span>
+                    <input type="range" min="40" max="4000" step="30" value="400" id="h_freq" class="grow">
+                    <span id="h_freq_value" class="w-[60px] h-[30px] border border-slate-400 rounded-md ml-[50px]">
+
+                    </span>
+                </div>
+            </fieldset>
+        </div>
+    </main>
+    <a href="https://github.com/CoderLotl/Piano-prototype"
+        class="w-full italic bg-slate-600 text-slate-300 font-semibold flex items-center py-2 pl-10">
+        <img src="../resources/github-mark-white.png" width="30px" height="30px" class="">
+        github.com/CoderLotl/Piano-prototype
+    </a>
 </body>
+
 </html>

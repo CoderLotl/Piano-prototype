@@ -1,6 +1,7 @@
 let realArray;
 let imgArray;
 let setArrays_btn;
+let unsetArrays_btn;
 let durationSlider;
 let duration = 1.0;
 let activeOscillators = [];
@@ -9,6 +10,8 @@ let imgArrayContent = [];
 const audioCtx = new (window.AudioContext || window.webkitAudioContext);
 let customWave = null;
 let notes = 'ABCDEFGH';
+let canvas;
+let ctx;
 
 let noteFrequencies =
 {
@@ -39,7 +42,10 @@ document.addEventListener('DOMContentLoaded', ()=>
     realArray = document.getElementById('real_array');
     imgArray = document.getElementById('img_array');
     setArrays_btn = document.getElementById('set_arrays_btn');
+    unsetArrays_btn = document.getElementById('unset_arrays_btn');
     durationSlider = document.getElementById('duration_slider');
+    canvas = document.getElementById('wave_form');
+    ctx = canvas.getContext("2d");
 
     durationSlider.value = duration;
     realArray.value = '';
@@ -48,6 +54,7 @@ document.addEventListener('DOMContentLoaded', ()=>
     SetAllSliders();
 
     setArrays_btn.addEventListener('click', SetButton);
+    unsetArrays_btn.addEventListener('click', UnsetButton);
 
     durationSlider.addEventListener('input', (e)=>
     {
@@ -81,20 +88,32 @@ document.addEventListener('DOMContentLoaded', ()=>
 
 function SetButton()
 {
-    let realText = realArray.value.match(/\d+(\.\d+)?/g).map(Number);
-    let imgText = imgArray.value.match(/\d+(\.\d+)?/g).map(Number);
-
-    if(realText.length == imgText.length && realText.length > 0)
+    if(realArray.value != null && realArray.value != '' && imgArray.value != null && imgArray.value != '')
     {
-        customWave = audioCtx.createPeriodicWave(
-            new Float32Array(realText),
-            new Float32Array(imgText),
-            { disableNormalization: true }
-        );
-        let indicator = document.getElementById('wave_indicator');
-        indicator.classList.remove('bg-red-400');
-        indicator.classList.add('bg-green-400');
+        let realText = realArray.value.match(/\d+(\.\d+)?/g).map(Number);
+        let imgText = imgArray.value.match(/\d+(\.\d+)?/g).map(Number);
+    
+        if(realText.length == imgText.length && realText.length > 1)
+        {
+            let realWave = new Float32Array(realText);
+            let imgWave = new Float32Array(imgText);
+            customWave = audioCtx.createPeriodicWave(realWave, imgWave, { disableNormalization: true });
+            let indicator = document.getElementById('wave_indicator');
+            indicator.classList.remove('bg-red-400');
+            indicator.classList.add('bg-green-400');
+    
+            drawStaticWave(realWave, imgWave);
+        }
     }
+}
+
+function UnsetButton()
+{
+    customWave = null;
+    let indicator = document.getElementById('wave_indicator');
+    indicator.classList.add('bg-red-400');
+    indicator.classList.remove('bg-green-400');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
 function SetSlider(slider, span, note)
@@ -131,11 +150,12 @@ function playNote(frequency, time = 0.6, duration = 0.6)
     }
     
     const oscillator = audioCtx.createOscillator();
-    
+    const analyser = audioCtx.createAnalyser();
     const gainNode = audioCtx.createGain();
 
     // Connect the nodes: oscillator → gain → speakers
     oscillator.connect(gainNode);
+    oscillator.connect(analyser);
     gainNode.connect(audioCtx.destination);
 
     oscillator.setPeriodicWave(customWave);
@@ -152,7 +172,7 @@ function playNote(frequency, time = 0.6, duration = 0.6)
     gainNode.gain.exponentialRampToValueAtTime(0.001, now + duration);
 
     // Start and then stop the oscillator after 1 second.
-    oscillator.start(now);
+    oscillator.start(now);    
     oscillator.stop(now + duration);
 
     activeOscillators.push(oscillator);
@@ -160,4 +180,51 @@ function playNote(frequency, time = 0.6, duration = 0.6)
     {
         activeOscillators = activeOscillators.filter(o => o !== oscillator);
     };
+}
+
+function drawStaticWave(real, imag)
+{
+    // We'll use the canvas width as the number of sample points.
+    const sampleCount = canvas.width;
+    const waveform = new Float32Array(sampleCount);
+    const twoPi = 2 * Math.PI;
+    const harmonics = real.length; // Both arrays have the same length
+
+    // Calculate the waveform over one full period (0 to 2π)
+    for(let i = 0; i < sampleCount; i++)
+    {
+        let t = (i / sampleCount) * twoPi;
+        let value = 0;
+
+        // For n=0, use the DC offset (real[0]). For higher harmonics, add cosine and sine terms.
+        for(let n = 0; n < harmonics; n++)
+        {
+            if(n === 0)
+            {
+                value += real[0];  // DC component
+            }
+            else
+            {
+                value += real[n] * Math.cos(n * t) + imag[n] * Math.sin(n * t);
+            }
+        }
+        waveform[i] = value;
+    }
+
+    // Optional: Normalize the waveform so that it fits nicely on the canvas.
+    // Find the max absolute value:
+    let maxVal = Math.max(...waveform.map(Math.abs));
+    if (maxVal === 0) { maxVal = 1; } // prevent division by zero
+
+    // Draw the waveform on the canvas:
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.beginPath();
+    for (let i = 0; i < sampleCount; i++) {
+        let x = (i / sampleCount) * canvas.width;
+        // Scale the value to canvas height (centered vertically):
+        let y = canvas.height / 2 - (waveform[i] / maxVal) * (canvas.height / 2);
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+    }
+    ctx.stroke();
 }
