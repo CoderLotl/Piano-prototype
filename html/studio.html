@@ -129,7 +129,7 @@
         </div>
     </div>
 
-    <div class="flex flex-col mt-[50px] w-[50%]">
+    <div class="flex flex-col md:mt-[50px] md:w-[50%]">
         <fieldset class="flex border rounded-md p-5 items-end">
             <legend class="border rounded-md p-[3px] ml-[-10px]">
                 Wave Composition
@@ -140,7 +140,7 @@
                         Real Array
                     </span>
                     <div class="flex items-center border border-slate-400 rounded-md px-2 ml-2 ">
-                        [ <textarea placeholder="Type only numbers separated by a space: 1 2.5 3..." name="real_array" id="real_array" class="w-[350px] resize-none h-[25px] mx-2 outline-none"></textarea> ]
+                        [ <textarea placeholder="Type only numbers separated by a space: 1 2.5 3..." name="real_array" id="real_array" class="md:w-[350px] resize-none h-[25px] mx-2 outline-none"></textarea> ]
                     </div>
                 </div>
                 <div class="flex items-center mt-2 justify-start">
@@ -148,24 +148,24 @@
                         Img Array
                     </span>
                     <div class="flex items-center border border-slate-400 rounded-md px-2 ml-2">
-                        [ <textarea placeholder="Type only numbers separated by a space: 1 2.5 3..." name="img_array" id="img_array" class="w-[350px] resize-none h-[25px] mx-2 outline-none"></textarea> ]
+                        [ <textarea placeholder="Type only numbers separated by a space: 1 2.5 3..." name="img_array" id="img_array" class="md:w-[350px] resize-none h-[25px] mx-2 outline-none"></textarea> ]
                     </div>
                 </div>
             </div>
-            <button id="set_arrays_btn" class="border border-slate-400 rounded-md h-[50px] w-[50px] ml-10 hover:bg-slate-200">
+            <button id="set_arrays_btn" class="border border-slate-400 rounded-md h-[50px] w-[50px] ml-5 md:ml-10 hover:bg-slate-200">
                 Set
             </button>
-            <span id="wave_indicator" class="border border-slate-400 w-[20px] h-[20px] rounded-full ml-5 bg-red-400"></span>
+            <span id="wave_indicator" class="border border-slate-400 w-[20px] h-[20px] rounded-full ml-2 md:ml-5 bg-red-400"></span>
         </fieldset>
     </div>
 
-    <div class="flex flex-col mt-[50px] w-[50%]">
+    <div class="flex flex-col mt-[50px] md:w-[50%]">
         <fieldset class="flex flex-col border rounded-md p-5 items-end">
             <legend class="border rounded-md p-[3px] ml-[-10px]">
                 Frequency Set
             </legend>
             <div class="flex items-center w-full">
-                <span class="mr-[50px]">
+                <span class="mr-5 md:mr-[50px]">
                     A
                 </span>
                 <input type="range" min="40" max="4000" step="30" value="400" id="a_freq" class="grow">
@@ -174,7 +174,7 @@
                 </span>
             </div>
             <div class="flex items-center w-full">
-                <span class="mr-[50px]">
+                <span class="mr-5 md:mr-[50px]">
                     B
                 </span>
                 <input type="range" min="40" max="4000" step="30" value="400" id="b_freq" class="grow">
@@ -183,7 +183,7 @@
                 </span>
             </div>
             <div class="flex items-center w-full">
-                <span class="mr-[50px]">
+                <span class="mr-5 md:mr-[50px]">
                     C
                 </span>
                 <input type="range" min="40" max="4000" step="30" value="400" id="c_freq" class="grow">
@@ -192,7 +192,7 @@
                 </span>
             </div>
             <div class="flex items-center w-full">
-                <span class="mr-[50px]">
+                <span class="mr-5 md:mr-[50px]">
                     D
                 </span>
                 <input type="range" min="40" max="4000" step="30" value="400" id="d_freq" class="grow">
@@ -201,7 +201,7 @@
                 </span>
             </div>
             <div class="flex items-center w-full">
-                <span class="mr-[50px]">
+                <span class="mr-5 md:mr-[50px]">
                     E
                 </span>
                 <input type="range" min="40" max="4000" step="30" value="400" id="e_freq" class="grow">
@@ -210,7 +210,7 @@
                 </span>
             </div>
             <div class="flex items-center w-full">
-                <span class="mr-[50px]">
+                <span class="mr-5 md:mr-[50px]">
                     F
                 </span>
                 <input type="range" min="40" max="4000" step="30" value="400" id="f_freq" class="grow">
@@ -219,7 +219,7 @@
                 </span>
             </div>
             <div class="flex items-center w-full">
-                <span class="mr-[50px]">
+                <span class="mr-5 md:mr-[50px]">
                     G
                 </span>
                 <input type="range" min="40" max="4000" step="30" value="400" id="g_freq" class="grow">
@@ -228,7 +228,7 @@
                 </span>
             </div>
             <div class="flex items-center w-full">
-                <span class="mr-[50px]">
+                <span class="mr-5 md:mr-[50px]">
                     H
                 </span>
                 <input type="range" min="40" max="4000" step="30" value="400" id="h_freq" class="grow">
@@ -239,8 +239,8 @@
         </fieldset>
     </div>
   </main>
-  <a href="https://github.com/CoderLotl/Piano-prototype" class="italic bg-slate-600 text-slate-300 font-semibold flex items-center py-2 pl-10">
-    <img src="./github-mark-white.png" width="30px" height="30px" class="">
+  <a href="https://github.com/CoderLotl/Piano-prototype" class="w-full italic bg-slate-600 text-slate-300 font-semibold flex items-center py-2 pl-10">
+    <img src="../resources/github-mark-white.png" width="30px" height="30px" class="">
     github.com/CoderLotl/Piano-prototype
   </a>
 </body>
