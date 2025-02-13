@@ -61,6 +61,7 @@ document.addEventListener('DOMContentLoaded', ()=>
     document.getElementById('unset_arrays_btn').addEventListener('click', UnsetButton);
     document.getElementById('saveWave_btn').addEventListener('click', SaveButton);
     document.getElementById('loadWave_btn').addEventListener('click', LoadButton);
+    document.getElementById('deleteWave_btn').addEventListener('click', DeleteButton);
 
     durationSlider.addEventListener('input', (e)=>
     {
@@ -219,14 +220,37 @@ function LoadButton()
                     realArray.value += ' ';
                     imgArray.value += ' ';
                 }
-            }
-            waveSelect.value = '';
+            }            
 
             indicator.classList.remove('bg-red-400');
             indicator.classList.add('bg-green-400');
 
             drawStaticWave(realWaveArray, imgWaveArray);
         }
+    }
+}
+
+function DeleteButton()
+{
+    let waveSelect = document.getElementById('load_wave_list');
+    if(waveSelect.value != '')
+    {
+        let options = waveSelect.options;        
+
+        waves = waves.filter((wave)=> wave.name !== waveSelect.value);
+        for(let i = 0; i < options.length; i++)
+        {
+            if(options[i].value == waveSelect.value)
+            {
+                options[i].remove();
+                break;
+            }
+        }
+        
+        console.log(waves);
+        let waves_json = JSON.stringify(waves);
+        storageManager.WriteLS('waves', waves_json);
+        waveSelect.value = '';
     }
 }
 
