@@ -206,6 +206,9 @@ function LoadButton()
 
             let indicator = document.getElementById('wave_indicator');
 
+            realArray.value = '';
+            imgArray.value = '';
+
             for(let i = 0; i < realWaveArray.length; i++)
             {
                 realArray.value += `${realWaveArray[i]}`;
