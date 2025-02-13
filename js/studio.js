@@ -15,6 +15,19 @@ let storageManager = new StorageManager();
 let realWaveArray;
 let imgWaveArray;
 let waves = [];
+let durationSlider;
+
+let originalNoteFrequencies =
+{
+    'C4': 261.63,
+    'D4': 293.66,
+    'E4': 329.63,
+    'F4': 349.23,
+    'G4': 392.00,
+    'A4': 440.00,
+    'B4': 493.88,
+    'C5': 523.25
+};
 
 let noteFrequencies =
 {
@@ -42,8 +55,7 @@ const noteValues =
 
 document.addEventListener('DOMContentLoaded', ()=>
 {
-    let durationSlider = document.getElementById('duration_slider');
-
+    durationSlider = document.getElementById('duration_slider');
     document.getElementById('save_name').value = '';
     realArray = document.getElementById('real_array');
     imgArray = document.getElementById('img_array');        
@@ -62,6 +74,7 @@ document.addEventListener('DOMContentLoaded', ()=>
     document.getElementById('saveWave_btn').addEventListener('click', SaveButton);
     document.getElementById('loadWave_btn').addEventListener('click', LoadButton);
     document.getElementById('deleteWave_btn').addEventListener('click', DeleteButton);
+    document.getElementById('default_btn').addEventListener('click', DefaultButton);
 
     durationSlider.addEventListener('input', (e)=>
     {
@@ -92,6 +105,22 @@ document.addEventListener('DOMContentLoaded', ()=>
         }
     });
 });
+
+function DefaultButton()
+{
+    Object.keys(noteFrequencies).forEach(key =>
+    {
+        if(originalNoteFrequencies.hasOwnProperty(key))
+        {
+            let noteKey = key;
+            let noteValue = originalNoteFrequencies[key];
+            noteFrequencies[key] = originalNoteFrequencies[key];
+            let note = Object.entries(noteValues).find(([key, value]) => value === noteKey)?.[0].toLowerCase();
+            document.getElementById(`${note}_freq`).value = noteValue;
+            document.getElementById(`${note}_freq_value`).textContent = noteValue;
+        }
+    });
+}
 
 function SetButton()
 {
@@ -134,6 +163,7 @@ function SaveButton()
             name: waveName,
             realArray: Array.from(realWaveArray),
             imgArray: Array.from(imgWaveArray),
+            duration: duration,
             C4: noteFrequencies['C4'],
             D4: noteFrequencies['D4'],
             E4: noteFrequencies['E4'],
@@ -224,6 +254,9 @@ function LoadButton()
 
             indicator.classList.remove('bg-red-400');
             indicator.classList.add('bg-green-400');
+
+            duration = selectedWave.duration;
+            durationSlider.value = selectedWave.duration;
 
             drawStaticWave(realWaveArray, imgWaveArray);
         }
