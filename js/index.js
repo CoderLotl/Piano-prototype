@@ -15,7 +15,20 @@ let typeSelect;
 let writeMusic = false;
 
 // Define frequencies for some musical notes.
-const noteFrequencies =
+let originalNoteFrequencies =
+{
+    'C4': 261.63,
+    'D4': 293.66,
+    'E4': 329.63,
+    'F4': 349.23,
+    'G4': 392.00,
+    'A4': 440.00,
+    'B4': 493.88,
+    'C5': 523.25
+};
+
+
+let noteFrequencies =
 {
     'C4': 261.63,
     'D4': 293.66,
@@ -50,7 +63,8 @@ document.addEventListener('DOMContentLoaded', () =>
     typeSelect = document.getElementById('instrumentSelect');
 
     tempoSlider.value = tempo;
-    durationSlider.value = duration;    
+    durationSlider.value = duration;
+    typeSelect.value = 'sine';
 
     initWaveSelect();
 

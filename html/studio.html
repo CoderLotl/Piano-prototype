@@ -9,15 +9,15 @@
     <script type="module" src="../js/studio.js"></script>
 </head>
 
-<body class="w-full h-[100vh] flex flex-col items-center">
-    <h1 class="text-center">Simple Piano Studio</h1>
-    <main class="flex flex-col items-center grow mb-[50px] w-full">
+<body class="w-full h-[100vh] flex flex-col items-center bg-gray-950">
+    <main class="flex flex-col items-center grow mb-[50px] w-full md:w-[75%] bg-slate-100 ">
+        <h1 class="text-center">Simple Piano Studio</h1>
 
         <div class="mt-20 mb-5 flex flex-col items-center">
             <a class="border border-slate-300 rounded-md p-2 bg-blue-400 hover:bg-orange-400" href="../index.html">
                 <<< To the Piano. </a>
         </div>
-        <div id="piano" class="flex bg-slate-300 items-center justify-center py-4 w-full">
+        <div id="piano" class="flex bg-slate-600 items-center justify-center py-4 w-full">
             <!-- Each button represents a note. The data-note attribute is used to pick the frequency. -->
             <button data-note="C4" data-char="A"
                 class="border border-black w-10 h-50 bg-slate-200 mx-1 hover:bg-slate-300 flex flex-col justify-between">
@@ -177,7 +177,26 @@
             </fieldset>
         </div>
 
-        <div class="flex flex-col mt-[50px] md:w-[50%]">
+        <div class="flex mt-[5px] md:w-[50%] border border-black rounded-md p-2">
+            <div class="flex flex-col">
+                <button id="saveWave_btn" class="border border-slate-400 rounded-md w-[60px] hover:bg-slate-400 mb-2">
+                    Save
+                </button>
+                <button id="loadWave_btn" class="border border-slate-400 rounded-md w-[60px] hover:bg-slate-400 mb-2">
+                    Load
+                </button>
+                <button class="border border-slate-400 rounded-md w-[60px] hover:bg-slate-400">
+                    Delete
+                </button>
+            </div>
+            <div class="flex flex-col">
+                <textarea name="save_name" id="save_name" placeholder="Type a wave name" minlength="1" maxlength="20"
+                class="md:w-[350px] resize-none h-[25px] mx-2 outline-none border border-black px-2 rounded-md mb-2"></textarea>
+                <select name="load_wave_list" id="load_wave_list" class="mx-2 rounded-md px-2 bg-slate-200 h-[25px]"></select>
+            </div>
+        </div>
+
+        <div class="flex flex-col mt-[5px] md:w-[50%]">
             <fieldset class="flex flex-col border rounded-md p-5 items-end">
                 <legend class="border rounded-md p-[3px] ml-[-10px]">
                     Frequency Set
@@ -259,7 +278,7 @@
     </main>
     <a href="https://github.com/CoderLotl/Piano-prototype"
         class="w-full italic bg-slate-600 text-slate-300 font-semibold flex items-center py-2 pl-10">
-        <img src="../resources/github-mark-white.png" width="30px" height="30px" class="">
+        <img src="../resources/github-mark-white.png" width="30px" height="30px" class="mr-2">
         github.com/CoderLotl/Piano-prototype
     </a>
 </body>

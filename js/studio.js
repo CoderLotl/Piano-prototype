@@ -1,8 +1,7 @@
+import { StorageManager } from "./StorageManager.js";
+
 let realArray;
 let imgArray;
-let setArrays_btn;
-let unsetArrays_btn;
-let durationSlider;
 let duration = 1.0;
 let activeOscillators = [];
 let realArrayContent = [];
@@ -12,6 +11,10 @@ let customWave = null;
 let notes = 'ABCDEFGH';
 let canvas;
 let ctx;
+let storageManager = new StorageManager();
+let realWaveArray;
+let imgWaveArray;
+let waves = [];
 
 let noteFrequencies =
 {
@@ -39,11 +42,11 @@ const noteValues =
 
 document.addEventListener('DOMContentLoaded', ()=>
 {
+    let durationSlider = document.getElementById('duration_slider');
+
+    document.getElementById('save_name').value = '';
     realArray = document.getElementById('real_array');
-    imgArray = document.getElementById('img_array');
-    setArrays_btn = document.getElementById('set_arrays_btn');
-    unsetArrays_btn = document.getElementById('unset_arrays_btn');
-    durationSlider = document.getElementById('duration_slider');
+    imgArray = document.getElementById('img_array');        
     canvas = document.getElementById('wave_form');
     ctx = canvas.getContext("2d");
 
@@ -52,9 +55,12 @@ document.addEventListener('DOMContentLoaded', ()=>
     imgArray.value = '';
 
     SetAllSliders();
+    AutoLoadWaves();
 
-    setArrays_btn.addEventListener('click', SetButton);
-    unsetArrays_btn.addEventListener('click', UnsetButton);
+    document.getElementById('set_arrays_btn').addEventListener('click', SetButton);
+    document.getElementById('unset_arrays_btn').addEventListener('click', UnsetButton);
+    document.getElementById('saveWave_btn').addEventListener('click', SaveButton);
+    document.getElementById('loadWave_btn').addEventListener('click', LoadButton);
 
     durationSlider.addEventListener('input', (e)=>
     {
@@ -95,14 +101,14 @@ function SetButton()
     
         if(realText.length == imgText.length && realText.length > 1)
         {
-            let realWave = new Float32Array(realText);
-            let imgWave = new Float32Array(imgText);
-            customWave = audioCtx.createPeriodicWave(realWave, imgWave, { disableNormalization: true });
+            realWaveArray = new Float32Array(realText);
+            imgWaveArray = new Float32Array(imgText);
+            customWave = audioCtx.createPeriodicWave(realWaveArray, imgWaveArray, { disableNormalization: true });
             let indicator = document.getElementById('wave_indicator');
             indicator.classList.remove('bg-red-400');
             indicator.classList.add('bg-green-400');
     
-            drawStaticWave(realWave, imgWave);
+            drawStaticWave(realWaveArray, imgWaveArray);
         }
     }
 }
@@ -114,6 +120,109 @@ function UnsetButton()
     indicator.classList.add('bg-red-400');
     indicator.classList.remove('bg-green-400');
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+function SaveButton()
+{
+    let waveName = document.getElementById('save_name').value;
+    if(waveName.length > 1 && customWave != null)
+    {
+        let sameWave = false;
+        let newWave = 
+        {
+            name: waveName,
+            realArray: Array.from(realWaveArray),
+            imgArray: Array.from(imgWaveArray),
+            C4: noteFrequencies['C4'],
+            D4: noteFrequencies['D4'],
+            E4: noteFrequencies['E4'],
+            F4: noteFrequencies['F4'],
+            G4: noteFrequencies['G4'],
+            A4: noteFrequencies['A4'],
+            B4: noteFrequencies['B4'],
+            C5: noteFrequencies['C5']
+        }        
+
+        for(let i = 0; i < waves.length; i++)
+        {
+            if(waves[i].name == waveName)
+            {
+                waves[i] = newWave;
+                sameWave = true;
+                break;
+            }
+        }
+
+        if(!sameWave)
+        {
+            waves.push(newWave);
+            let waveSelect = document.getElementById('load_wave_list');
+            let opt = document.createElement('option');
+            opt.textContent = waves[i].name;
+            opt.value = waves[i].name;
+            waveSelect.appendChild(opt);
+        }
+        
+        let waves_json = JSON.stringify(waves);
+        storageManager.WriteLS('waves', waves_json);
+        document.getElementById('save_name').value = '';
+    }
+}
+
+function LoadButton()
+{
+    let waveSelect = document.getElementById('load_wave_list');
+    if(waveSelect.value != '')
+    {
+        let selectedWaveName = waveSelect.value;
+        let selectedWave = null;
+        for(let i = 0; i < waves.length; i++)
+        {
+            if(waves[i].name == selectedWaveName)
+            {
+                selectedWave = waves[i];
+                break;
+            }
+        }
+
+        if(selectedWave != null)
+        {
+            realWaveArray = selectedWave.realArray;
+            imgWaveArray = selectedWave.imgArray;
+            customWave = audioCtx.createPeriodicWave(realWaveArray, imgWaveArray, { disableNormalization: true });
+
+            Object.keys(noteFrequencies).forEach(key =>
+            {
+                if(selectedWave.hasOwnProperty(key))
+                {
+                    let noteKey = key;
+                    let noteValue = selectedWave[key];
+                    noteFrequencies[key] = selectedWave[key];
+                    let note = Object.entries(noteValues).find(([key, value]) => value === noteKey)?.[0].toLowerCase();
+                    document.getElementById(`${note}_freq`).value = noteValue;
+                    document.getElementById(`${note}_freq_value`).textContent = noteValue;
+                }
+            });
+
+            let indicator = document.getElementById('wave_indicator');
+
+            for(let i = 0; i < realWaveArray.length; i++)
+            {
+                realArray.value += `${realWaveArray[i]}`;
+                imgArray.value += `${imgWaveArray[i]}`;
+                if(i < realWaveArray.length -1)
+                {
+                    realArray.value += ' ';
+                    imgArray.value += ' ';
+                }
+            }
+
+            indicator.classList.remove('bg-red-400');
+            indicator.classList.add('bg-green-400');
+
+            drawStaticWave(realWaveArray, imgWaveArray);
+        }
+    }
 }
 
 function SetSlider(slider, span, note)
@@ -133,8 +242,7 @@ function SetAllSliders()
         let slider = document.getElementById(`${note}_freq`);
         let freq_span = document.getElementById(`${note}_freq_value`);
         let realNote = noteValues[note.toUpperCase()];        
-        let realNoteValue = noteFrequencies[realNote];
-        // frequencySliders[`${note}_freq_slider`] = slider;
+        let realNoteValue = noteFrequencies[realNote];        
 
         SetSlider(slider, freq_span, realNote);
         slider.value = realNoteValue;
@@ -153,7 +261,6 @@ function playNote(frequency, time = 0.6, duration = 0.6)
     const analyser = audioCtx.createAnalyser();
     const gainNode = audioCtx.createGain();
 
-    // Connect the nodes: oscillator → gain → speakers
     oscillator.connect(gainNode);
     oscillator.connect(analyser);
     gainNode.connect(audioCtx.destination);
@@ -162,16 +269,11 @@ function playNote(frequency, time = 0.6, duration = 0.6)
     
     oscillator.frequency.value = frequency;
 
-    // Create a simple envelope:
-    // - Start the gain at 0,
-    // - Quickly ramp up to full volume,
-    // - Then exponentially ramp down over 1 second.
     const now = audioCtx.currentTime + time;
     gainNode.gain.setValueAtTime(0, now);
     gainNode.gain.linearRampToValueAtTime(1, now + 0.01);
     gainNode.gain.exponentialRampToValueAtTime(0.001, now + duration);
-
-    // Start and then stop the oscillator after 1 second.
+    
     oscillator.start(now);    
     oscillator.stop(now + duration);
 
@@ -227,4 +329,30 @@ function drawStaticWave(real, imag)
         else ctx.lineTo(x, y);
     }
     ctx.stroke();
+}
+
+function AutoLoadWaves()
+{
+    let storedWaves = storageManager.ReadLS('waves');
+    if(storedWaves != null)
+    {
+        waves = JSON.parse(storedWaves);
+        waves.forEach(wave =>
+        {
+            wave.realArray = new Float32Array(wave.realArray);
+            wave.imgArray = new Float32Array(wave.imgArray);
+        });
+
+        let waveSelect = document.getElementById('load_wave_list');
+        
+        for(let i = 0; i < waves.length; i++)
+        {
+            let opt = document.createElement('option');
+            opt.textContent = waves[i].name;
+            opt.value = waves[i].name;
+            waveSelect.appendChild(opt);
+        }
+
+        waveSelect.value = '';
+    }
 }
