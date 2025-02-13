@@ -66,7 +66,8 @@ document.addEventListener('DOMContentLoaded', ()=>
     realArray.value = '';
     imgArray.value = '';    
 
-    Init();
+    SaveButton_Switch();
+    SetButton_Switch();
     SetAllSliders();
     AutoLoadWaves();
 
@@ -76,6 +77,15 @@ document.addEventListener('DOMContentLoaded', ()=>
     document.getElementById('save_name').addEventListener('input', (e)=>
     {
         SaveButton_Switch();
+    });
+
+    document.getElementById('real_array').addEventListener('input', (e)=>
+    {
+        SetButton_Switch();
+    });
+    document.getElementById('img_array').addEventListener('input', (e)=>
+    {
+        SetButton_Switch();
     });
 
     document.getElementById('loadWave_btn').addEventListener('click', LoadButton);
@@ -148,6 +158,28 @@ function SetButton()
             SaveButton_Switch();
         }
     }
+}
+
+function SetButton_Switch()
+{
+    let set_btn = document.getElementById('set_arrays_btn');
+    if(realArray.value != null && realArray.value != ''&& imgArray.value != null && imgArray.value != '')
+    {
+        let realText = realArray.value.match(/\d+(\.\d+)?/g).map(Number);
+        let imgText = imgArray.value.match(/\d+(\.\d+)?/g).map(Number);
+
+        if(realText.length == imgText.length && realText.length > 1)
+        {
+            set_btn.disabled = false;
+            set_btn.classList.add('hover:bg-slate-400', 'border-slate-400');
+            set_btn.classList.remove('bg-slate-300', 'border-slate-300');
+            return;
+        }
+    }
+    
+    set_btn.disabled = true;
+    set_btn.classList.remove('hover:bg-slate-400', 'border-slate-400');
+    set_btn.classList.add('bg-slate-300', 'border-slate-300');
 }
 
 function UnsetButton()
@@ -286,6 +318,7 @@ function LoadButton()
 
             drawStaticWave(realWaveArray, imgWaveArray);
             SaveButton_Switch();
+            SetButton_Switch();
         }
     }
 }
@@ -444,9 +477,4 @@ function AutoLoadWaves()
 
         waveSelect.value = '';
     }
-}
-
-function Init()
-{        
-    SaveButton_Switch();
 }
