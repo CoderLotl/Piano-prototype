@@ -158,8 +158,8 @@ function SaveButton()
             waves.push(newWave);
             let waveSelect = document.getElementById('load_wave_list');
             let opt = document.createElement('option');
-            opt.textContent = waves[i].name;
-            opt.value = waves[i].name;
+            opt.textContent = newWave.name;
+            opt.value = newWave.name;
             waveSelect.appendChild(opt);
         }
         
