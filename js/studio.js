@@ -64,14 +64,20 @@ document.addEventListener('DOMContentLoaded', ()=>
 
     durationSlider.value = duration;
     realArray.value = '';
-    imgArray.value = '';
+    imgArray.value = '';    
 
+    Init();
     SetAllSliders();
     AutoLoadWaves();
 
     document.getElementById('set_arrays_btn').addEventListener('click', SetButton);
     document.getElementById('unset_arrays_btn').addEventListener('click', UnsetButton);
     document.getElementById('saveWave_btn').addEventListener('click', SaveButton);
+    document.getElementById('save_name').addEventListener('input', (e)=>
+    {
+        SaveButton_Switch();
+    });
+
     document.getElementById('loadWave_btn').addEventListener('click', LoadButton);
     document.getElementById('deleteWave_btn').addEventListener('click', DeleteButton);
     document.getElementById('default_btn').addEventListener('click', DefaultButton);
@@ -139,6 +145,7 @@ function SetButton()
             indicator.classList.add('bg-green-400');
     
             drawStaticWave(realWaveArray, imgWaveArray);
+            SaveButton_Switch();
         }
     }
 }
@@ -150,11 +157,12 @@ function UnsetButton()
     indicator.classList.add('bg-red-400');
     indicator.classList.remove('bg-green-400');
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    SaveButton_Switch();
 }
 
 function SaveButton()
 {
-    let waveName = document.getElementById('save_name').value;
+    let waveName = document.getElementById('save_name').value;    
     if(waveName.length > 1 && customWave != null)
     {
         let sameWave = false;
@@ -198,6 +206,24 @@ function SaveButton()
         let waves_json = JSON.stringify(waves);
         storageManager.WriteLS('waves', waves_json);
         document.getElementById('save_name').value = '';
+    }
+}
+
+function SaveButton_Switch()
+{
+    let save_name = document.getElementById('save_name');
+    let save_btn = document.getElementById('saveWave_btn');
+    if(save_name.value.length > 0 && save_name.value.length < 21 && customWave != null)
+    {        
+        save_btn.disabled = false;
+        save_btn.classList.remove('border-slate-300', 'bg-slate-300');
+        save_btn.classList.add('hover:bg-slate-400', 'border-slate-400');
+    }
+    else
+    {        
+        save_btn.disabled = true;
+        save_btn.classList.remove('hover:bg-slate-400', 'border-slate-400');
+        save_btn.classList.add('border-slate-300', 'bg-slate-300');
     }
 }
 
@@ -259,6 +285,7 @@ function LoadButton()
             durationSlider.value = selectedWave.duration;
 
             drawStaticWave(realWaveArray, imgWaveArray);
+            SaveButton_Switch();
         }
     }
 }
@@ -417,4 +444,9 @@ function AutoLoadWaves()
 
         waveSelect.value = '';
     }
+}
+
+function Init()
+{        
+    SaveButton_Switch();
 }
