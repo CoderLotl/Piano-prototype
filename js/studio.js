@@ -161,6 +161,7 @@ function SaveButton()
             opt.textContent = newWave.name;
             opt.value = newWave.name;
             waveSelect.appendChild(opt);
+            waveSelect.value = '';
         }
         
         let waves_json = JSON.stringify(waves);
@@ -219,6 +220,7 @@ function LoadButton()
                     imgArray.value += ' ';
                 }
             }
+            waveSelect.value = '';
 
             indicator.classList.remove('bg-red-400');
             indicator.classList.add('bg-green-400');
